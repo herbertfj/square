@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "target": "esnext"
+  },
+  "files": [
+    "src/index.ts"
+  ]
+}

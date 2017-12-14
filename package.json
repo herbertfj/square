@@ -1,0 +1,25 @@
+{
+  "name": "square",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "author": "Herbert Freyre",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server",
+    "lint": "tslint -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.34",
+    "@babel/preset-env": "^7.0.0-beta.34",
+    "awesome-typescript-loader": "^3.4.1",
+    "css-loader": "^0.28.7",
+    "html-webpack-plugin": "^2.30.1",
+    "style-loader": "^0.19.0",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.2",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7"
+  },
+  "dependencies": {}
+}
