@@ -3,7 +3,11 @@
   "extends": [
     "tslint:recommended"
   ],
-  "jsRules": {},
+  "jsRules": {
+    "indent": [true, "spaces", 2],
+    "quotemark": [true, "single", "avoid-escape"],
+    "semicolon": [true, "never"]
+  },
   "rules": {
     "indent": [true, "spaces", 2],
     "quotemark": [true, "single", "avoid-escape"],
