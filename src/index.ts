@@ -5,6 +5,7 @@ import {HEIGHT, WIDTH} from './constants'
 import {PegActions, registerPegEvents} from './items/events'
 import {Peg} from './items/peg'
 import {update} from './items/update'
+import {renderPlatforms} from './items/platform'
 
 const canvas = document.getElementById('square') as HTMLCanvasElement
 canvas.width = WIDTH
@@ -20,6 +21,7 @@ const pegActions: PegActions = new Set()
 
 const render = () => {
   renderBackground(context)
+  renderPlatforms(context)
 
   context.fillStyle = peg.color
   context.fillRect(peg.x, peg.y, peg.w, peg.h)

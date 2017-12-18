@@ -1,5 +1,4 @@
 import {HEIGHT, WIDTH} from './constants'
-import {floor} from './items/floor'
 
 const background = {
   color: 'rgb(3, 33, 28)',
@@ -20,9 +19,6 @@ const header = {
 export const renderBackground = (context: CanvasRenderingContext2D) => {
   context.fillStyle = background.color
   context.fillRect(background.x, background.y, background.w, background.h)
-
-  context.fillStyle = floor.color
-  context.fillRect(floor.x, floor.y, floor.w, floor.h)
 
   context.fillStyle = header.color
   context.font = header.font
