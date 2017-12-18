@@ -1,4 +1,5 @@
 import {HEIGHT, WIDTH} from './constants'
+import {floor} from './items/floor'
 
 const background = {
   color: 'rgb(3, 33, 28)',
@@ -14,14 +15,6 @@ const header = {
   text: "Square: Peg's Journey",
   x: 30,
   y: 50,
-}
-
-const floor = {
-  color: 'rgb(101, 123, 80)',
-  h: 40,
-  w: WIDTH,
-  x: 0,
-  y: HEIGHT - 40,
 }
 
 export const renderBackground = (context: CanvasRenderingContext2D) => {

@@ -1,13 +1,23 @@
-import {Peg, PegAction} from './peg'
+import {HEIGHT} from '../constants'
+import {PegAction, PegActions} from './events'
+import {Peg} from './peg'
+import {update} from './update'
 
-describe('Peg', () => {
+describe('update', () => {
   let peg: Peg
-  const initialX = 5
-  const initialY = 10
-  const floor = 30
+  let pegActions: PegActions
+  const initialX = 20
+  const initialY = HEIGHT - 60
+  const time = 0.015
 
   beforeEach(() => {
-    peg = new Peg(initialX, initialY, floor)
+    peg = new Peg()
+    peg.x = initialX
+    peg.y = initialY
+
+    pegActions = new Set()
+
+    update(peg, pegActions, time)
   })
 
   describe('when initialized', () => {
@@ -18,11 +28,9 @@ describe('Peg', () => {
   })
 
   describe('when updated', () => {
-    const time = 0.015
-
     describe('with no actions', () => {
       beforeEach(() => {
-        peg.update(time)
+        update(peg, pegActions, time)
       })
 
       it('should not move', () => {
@@ -33,8 +41,9 @@ describe('Peg', () => {
 
     describe('when moved right', () => {
       beforeEach(() => {
-        peg.addAction(PegAction.RIGHT)
-        peg.update(time)
+        pegActions.add(PegAction.RIGHT)
+
+        update(peg, pegActions, time)
       })
 
       it('should move to the right', () => {
@@ -44,8 +53,9 @@ describe('Peg', () => {
 
     describe('when moved left', () => {
       beforeEach(() => {
-        peg.addAction(PegAction.LEFT)
-        peg.update(time)
+        pegActions.add(PegAction.LEFT)
+
+        update(peg, pegActions, time)
       })
 
       it('should move to the right', () => {

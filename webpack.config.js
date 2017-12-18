@@ -26,6 +26,7 @@ module.exports = {
             options: {
               useCache: true,
               useBabel: true,
+              configFileName: 'tsconfig.build.json',
               babelCore: '@babel/core',
               babelOptions: {
                 presets: [

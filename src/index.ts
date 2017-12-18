@@ -2,8 +2,9 @@ import './styles/application.css'
 
 import {renderBackground} from './background'
 import {HEIGHT, WIDTH} from './constants'
-import {registerPegEvents} from './peg/events'
-import {Peg} from './peg/peg'
+import {PegActions, registerPegEvents} from './items/events'
+import {Peg} from './items/peg'
+import {update} from './items/update'
 
 const canvas = document.getElementById('square') as HTMLCanvasElement
 canvas.width = WIDTH
@@ -11,19 +12,11 @@ canvas.height = HEIGHT
 
 const context = canvas.getContext('2d')
 
-const peg = new Peg(20, HEIGHT - 60, HEIGHT - 40)
+const peg = new Peg()
+peg.x = 20
+peg.y = HEIGHT - 60
 
-let then = Date.now()
-
-const update = () => {
-  const now = Date.now()
-  const delta = now - then
-  const time = delta / 1000
-
-  peg.update(time)
-
-  then = now
-}
+const pegActions: PegActions = new Set()
 
 const render = () => {
   renderBackground(context)
@@ -32,12 +25,20 @@ const render = () => {
   context.fillRect(peg.x, peg.y, peg.w, peg.h)
 }
 
-const run = () => {
-  update()
+let then = window.performance.now()
+
+const run = (now: number) => {
+  const delta = now - then
+  const time = delta / 1000
+
+  update(peg, pegActions, time)
+
+  then = now
+
   render()
 
   window.requestAnimationFrame(run)
 }
 
-registerPegEvents(peg)
-run()
+registerPegEvents(pegActions)
+run(then)
