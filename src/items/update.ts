@@ -4,7 +4,12 @@ import {Peg} from './peg'
 import {floor, Platform, platforms} from './platform'
 
 export const update = (peg: Peg, pegActions: PegActions, time: number) => {
+  peg.x += peg.vx * time
+  peg.y += peg.vy * time
+
   peg.vx = 0
+
+  const foundPlatform = platforms.find(pegIsOnPlatform(peg))
 
   for (const action of pegActions) {
     switch (action) {
@@ -15,15 +20,18 @@ export const update = (peg: Peg, pegActions: PegActions, time: number) => {
         peg.vx -= 250
         break
       case PegAction.JUMP:
-        if (peg.y + peg.h === floor.y) {
+        if (foundPlatform) {
           peg.vy = -350
         }
         break
     }
   }
 
-  peg.x += peg.vx * time
-  peg.y += peg.vy * time
+  if (foundPlatform) {
+      peg.y = foundPlatform.y - peg.h
+  } else {
+      peg.vy += GRAVITY * time
+  }
 
   if (peg.x < 0) {
     peg.x = 0
@@ -32,13 +40,10 @@ export const update = (peg: Peg, pegActions: PegActions, time: number) => {
   if (peg.x > WIDTH - peg.w) {
     peg.x = WIDTH - peg.w
   }
-
-  if (peg.y + peg.h > floor.y) {
-    peg.y = floor.y - peg.h
-  } else {
-    peg.vy += GRAVITY * time
-  }
 }
+
+const pegIsOnPlatform = (peg: Peg) => (platform: Platform) =>
+  pegIsHorizontallyOnPlatform(peg, platform) && pegFellOnPlatform(peg, platform)
 
 const pegIsHorizontallyOnPlatform = (peg: Peg, platform: Platform) => {
   return (peg.x <= platform.x && peg.x + peg.w > platform.x) ||
@@ -47,5 +52,5 @@ const pegIsHorizontallyOnPlatform = (peg: Peg, platform: Platform) => {
 }
 
 const pegFellOnPlatform = (peg: Peg, platform: Platform) => {
-  return (peg.)
+  return peg.vy >= 0 && peg.y < platform.y && peg.y + peg.h >= platform.y
 }

@@ -1,12 +1,12 @@
 import {HEIGHT, WIDTH} from '../constants'
 
 export class Platform {
-  color = 'rgb(101, 123, 80)'
+  public color = 'rgb(101, 123, 80)'
 
   constructor(public x: number,
               public y: number,
               public w: number,
-              public h: number = 20,) {
+              public h: number = 20) {
   }
 }
 

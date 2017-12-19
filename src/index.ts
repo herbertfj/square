@@ -4,8 +4,8 @@ import {renderBackground} from './background'
 import {HEIGHT, WIDTH} from './constants'
 import {PegActions, registerPegEvents} from './items/events'
 import {Peg} from './items/peg'
-import {update} from './items/update'
 import {renderPlatforms} from './items/platform'
+import {update} from './items/update'
 
 const canvas = document.getElementById('square') as HTMLCanvasElement
 canvas.width = WIDTH
