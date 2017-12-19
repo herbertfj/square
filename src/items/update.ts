@@ -28,9 +28,9 @@ export const update = (peg: Peg, pegActions: PegActions, time: number) => {
   }
 
   if (foundPlatform) {
-      peg.y = foundPlatform.y - peg.h
+    peg.y = foundPlatform.y - peg.h
   } else {
-      peg.vy += GRAVITY * time
+    peg.vy += peg.vy > 500 ? 0 : GRAVITY * time
   }
 
   if (peg.x < 0) {
