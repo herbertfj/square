@@ -5,7 +5,7 @@ export class Platform {
 
   constructor(public x: number,
               public y: number,
-              public w: number,
+              public w: number = 50,
               public h: number = 20) {
   }
 }
@@ -14,7 +14,14 @@ export const floor = new Platform(0, HEIGHT - 40, WIDTH, 40)
 
 export const platforms: Platform[] = [
   floor,
-  new Platform(100, HEIGHT - 100, 50, 20),
+  new Platform(100, HEIGHT - 100),
+  new Platform(200, HEIGHT - 160),
+  new Platform(400, HEIGHT - 160),
+  new Platform(100, HEIGHT - 220),
+  new Platform(300, HEIGHT - 220),
+  new Platform(200, HEIGHT - 280),
+  new Platform(400, HEIGHT - 340),
+  new Platform(300, HEIGHT - 400),
 ]
 
 export const renderPlatforms = (context: CanvasRenderingContext2D) => {

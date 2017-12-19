@@ -1,7 +1,7 @@
 import {GRAVITY, WIDTH} from '../constants'
 import {PegAction, PegActions} from './events'
 import {Peg} from './peg'
-import {floor, Platform, platforms} from './platform'
+import {Platform, platforms} from './platform'
 
 export const update = (peg: Peg, pegActions: PegActions, time: number) => {
   peg.x += peg.vx * time
