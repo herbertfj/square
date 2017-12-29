@@ -5,32 +5,15 @@ import {Platform, platforms} from './platform'
 
 export const update = (peg: Peg, pegActions: PegActions, time: number) => {
   peg.x += peg.vx * time
-  peg.y += peg.vy * time
 
   peg.vx = 0
 
-  const foundPlatform = platforms.find(pegIsOnPlatform(peg))
-
-  for (const action of pegActions) {
-    switch (action) {
-      case PegAction.RIGHT:
-        peg.vx += 250
-        break
-      case PegAction.LEFT:
-        peg.vx -= 250
-        break
-      case PegAction.JUMP:
-        if (foundPlatform) {
-          peg.vy = -350
-        }
-        break
-    }
+  if (pegActions.has(PegAction.RIGHT)) {
+    peg.vx += 250
   }
 
-  if (foundPlatform) {
-    peg.y = foundPlatform.y - peg.h
-  } else {
-    peg.vy += peg.vy > 500 ? 0 : GRAVITY * time
+  if (pegActions.has(PegAction.LEFT)) {
+    peg.vx -= 250
   }
 
   if (peg.x < 0) {
@@ -39,6 +22,21 @@ export const update = (peg: Peg, pegActions: PegActions, time: number) => {
 
   if (peg.x > WIDTH - peg.w) {
     peg.x = WIDTH - peg.w
+  }
+
+  const foundPlatform = platforms.find(pegIsOnPlatform(peg))
+
+  if (!foundPlatform) {
+    peg.vy += GRAVITY * time // come back to this
+    peg.y += peg.vy * time
+  } else {
+    peg.vy = 0
+    peg.y = foundPlatform.y - peg.h
+
+    if (pegActions.has(PegAction.JUMP)) {
+      peg.vy = -500
+      peg.y += peg.vy * time
+    }
   }
 }
 
