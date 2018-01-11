@@ -3,8 +3,9 @@ import './styles/application.css'
 import {renderBackground} from './background'
 import {HEIGHT, WIDTH} from './constants'
 import {PegActions, registerPegEvents} from './items/events'
-import {Peg} from './items/peg'
-import {renderPlatforms} from './items/platform'
+import {Hole, renderHole} from './items/hole'
+import {Peg, renderPeg} from './items/peg'
+import {platforms, renderPlatforms} from './items/platform'
 import {update} from './items/update'
 
 const canvas = document.getElementById('square') as HTMLCanvasElement
@@ -17,14 +18,16 @@ const peg = new Peg()
 peg.x = 20
 peg.y = HEIGHT - 60
 
+const hole = new Hole()
+hole.randomizeLocation(platforms)
+
 const pegActions: PegActions = new Set()
 
 const render = () => {
   renderBackground(context)
   renderPlatforms(context)
-
-  context.fillStyle = peg.color
-  context.fillRect(peg.x, peg.y, peg.w, peg.h)
+  renderHole(hole, context)
+  renderPeg(peg, context)
 }
 
 let then = window.performance.now()
@@ -33,7 +36,7 @@ const run = (now: number) => {
   const delta = now - then
   const time = delta / 1000
 
-  update(peg, pegActions, time)
+  update({peg, pegActions, hole, platforms}, time)
 
   then = now
 
