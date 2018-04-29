@@ -1,9 +1,16 @@
 import {GRAVITY, WIDTH} from '../constants'
-import {PegAction, PegActions} from './events'
+import {PegAction} from './events'
+import {GameContext} from './game-context'
 import {Peg} from './peg'
-import {Platform, platforms} from './platform'
+import {Platform} from './platform'
 
-export const update = (peg: Peg, pegActions: PegActions, time: number) => {
+export const update = (gameContext: GameContext, time: number) => {
+  const {peg, pegActions, platforms, hole} = gameContext
+
+  if (gotHole(gameContext)) {
+    hole.randomizeLocation(platforms)
+  }
+
   peg.x += peg.vx * time
 
   peg.vx = 0
@@ -51,4 +58,11 @@ const pegIsHorizontallyOnPlatform = (peg: Peg, platform: Platform) => {
 
 const pegFellOnPlatform = (peg: Peg, platform: Platform) => {
   return peg.vy >= 0 && peg.y < platform.y && peg.y + peg.h >= platform.y
+}
+
+const gotHole = ({peg, hole}: GameContext) => {
+  return ((peg.left >= hole.left && peg.left <= hole.right) ||
+    (peg.right >= hole.left && peg.right <= hole.right)) &&
+    ((peg.top >= hole.top && peg.top <= hole.bottom) ||
+      (peg.bottom >= hole.top && peg.bottom <= hole.bottom))
 }
